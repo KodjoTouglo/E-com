@@ -1,0 +1,21 @@
+ 
+ {% load static %}
+ {% block slide %}
+<div class="contain">
+    <div class="slides">
+        {% for img in image.all %}
+        <div class="slide">
+            <img src="{{img.image.url}}">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="slide-controls">
+        <button id="prev-btn">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <button id="next-btn">
+            <i class="fa fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+{% endblock %}    

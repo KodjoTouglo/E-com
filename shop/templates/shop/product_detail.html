@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/base.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,500;0,700;1,500&display=swap" 
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Product_detail - Ets. Prince</title>
+    </head>
+
+    <body>
+            <div class="container">
+                <div class="navbar">
+                    <div class="logo">
+                        <img src="img/logo.jpeg" width="125px">
+                    </div>
+                    
+                    <nav>
+                        <ul id="MenuItems">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Accout</a></li>
+                        </ul>
+                    </nav>
+                    <img src="img/cart.png" width="30px" height="30px">
+                    <img src="img/menu.png" class="menu-icon" onclick="menutoggle()">
+                </div>  
+            </div>
+        
+
+    <!--------products detail------------>
+
+    <div class="small-container product-detail">
+        <div class="row">
+            <div class="col-2">
+                <img src="{{ product.image.url }}" width="100%" id="ProductImg">
+
+                <div class="small-img-row">
+                    {% for img in images %}
+                    <div class="small-img-col">
+                        <img src="{{img.image.url}}" width="100%" class="small-img">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <div class="col-2">
+                <p><a href="/">Home</a> / <a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></p>
+                <h1>{{ product.name }}</h1>
+                <h4>${{ product.price }}</h4>
+
+                <form action="{% url "cart:cart_add" product.id %}" method="post" id="post-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+
+                    {% if product.variant == 'None' %}
+                    <input type="number" value="1" min="1" max="{{ product.max_qty }}">
+                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
+
+                    {% elif product.variant == 'Size-Color' %}
+                    <select name='size' id="size">
+                        <option>Size:</option>
+                        {% for itm in size %}
+                        <option value="{{itm.size_id}}">{{itm.size.name}}</option>
+                        {% endblock %}
+                    </select>
+                    <ul>
+                        {% for itm in color %}
+                        <input type="radio" name="color" value="{{ itm.id }}">
+                        <li >
+                            <a href="#" style="background-color:{{ itm.color.code }}; color: #ffffff; text-shadow: 2px 2px #000000; width: 70px">
+                            {{ itm.color }} ${{ itm.price }}
+                            </a>
+                            <img src="{{ itm.image }}" style="height: 70px">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <input type="number" value="1" min="1" max="{{ product.max_qty }}">
+                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
+
+                    {% elif product.variant == 'Size' %}
+                    <select name='size' id="size">
+                        <option>Size:</option>
+                        {% for itm in size %}
+                        <option value="{{itm.size_id}}">{{itm.size.name}}</option>
+                        {% endblock %}
+                    </select>
+                    <input type="number" value="1" min="1" max="{{ product.max_qty }}">
+                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
+
+                    {% elif product.variant == 'Color' %}
+                     <ul>
+                        {% for itm in color %}
+                        <input type="radio" name="color" value="{{ itm.id }}">
+                        <li >
+                            <a href="#" style="background-color:{{ itm.color.code }}; color: #ffffff; text-shadow: 2px 2px #000000; width: 70px">
+                            {{ itm.color }} ${{ itm.price }}
+                            </a>
+                            <img src="{{ itm.image }}" style="height: 70px">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <input type="number" value="1" min="1" max="{{ product.max_qty }}">
+                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
+                    {% endif %}
+                </form>
+                <h3>Product Details</h3><br>
+                <p>{{ product.description|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="small-container">
+        <div class="row row-2">
+            <h3>People who bought this also bougth</h3>
+        </div>
+    </div>
+
+    <div class="small-container">
+        <div class="row">
+            <div class="col-4">
+                <img src="img/product-1.jpg">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="ratting">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$50.00</p>
+            </div>
+        </div>
+
+        
+    </div>
+            
+    <!-------------------------------footer------------------------------------->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Location</h3>
+                    <p>Download App for Android and ios mobile phone.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="img/logo.jpeg" >
+                    <p>Dolor quis fugiat ut eiusmod est dolor irure pariatur duis incididunt minim.</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog post</li>
+                        <li>Return Policy</li>
+                        <li>Join Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Instagram</li>
+                        <li>WhatsApp</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">Copyright 2020 - Ets. Prince</p>
+        </div>
+    </div>
+
+
+    <!-----------------------------js------------------------------->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight="0px";
+
+        function menutoggle(){
+            if(MenuItems.style.maxHeight == "0px")
+                {
+                    MenuItems.style.maxHeight == "200px";
+                }
+            else
+                {
+                    MenuItems.style.maxHeight == "0px";
+                }
+        }
+    </script>
+
+    <script>
+        var ProductImg = document.getElementById("ProductImg");
+        var SmallImg = document.getElementsByClassName("small-img");
+
+            SmallImg[0].onclick = function(){
+                ProductImg.src = SmallImg[0].src;
+            }
+            SmallImg[1].onclick = function(){
+                ProductImg.src = SmallImg[1].src;
+            }
+            SmallImg[2].onclick = function(){
+                ProductImg.src = SmallImg[2].src;
+            }
+            SmallImg[3].onclick = function(){
+                ProductImg.src = SmallImg[3].src;
+            }
+    </script>
+
+
+
+    </body>
+    
+</html>

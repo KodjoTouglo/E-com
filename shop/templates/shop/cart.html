@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/base.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,500;0,700;1,500&display=swap" 
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Product_detail - Ets. Prince</title>
+    </head>
+
+    <body>
+            <div class="container">
+                <div class="navbar">
+                    <div class="logo">
+                        <img src="img/logo.jpeg" width="125px">
+                    </div>
+                    
+                    <nav>
+                        <ul id="MenuItems">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Accout</a></li>
+                        </ul>
+                    </nav>
+                    <img src="img/cart.png" width="30px" height="30px">
+                    <img src="img/menu.png" class="menu-icon" onclick="menutoggle()">
+                </div>  
+            </div>
+
+
+    <!--cart-->
+    <div class="small-container cart-page">
+        <aside>
+            <table class="cart">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Remove</th>
+                    <th>Unit price</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src="img/gallery-2.jpg" >
+                        </td>
+                        <td>T-Shirt</td>
+                        <td>
+                            <form>
+                                <input type="submit" value="Update">
+                            </form>
+                        </td>
+                        <td>
+                            <form>
+                                <input type="submit" value="Remove">
+                            </form>
+                        </td>
+                        <td class="num">$50.00</td>
+                        <td class="num">$50.00</td>
+                    </tr>
+                    <tr class="subtotal">
+                        <td>Subtotal</td>
+                        <td colspan="4"></td>
+                        <td class="num">$50.00</td>
+                    </tr>
+                    <tr>
+                        <td>Coupon</td>
+                        <td colspan="4"></td>
+                        <td class="num neg">- $50.00</td>
+                    </tr>
+                    <tr class="total">
+                        <td>Total</td>
+                        <td colspan="4"></td>
+                        <td class="num">$50.00</td>
+                    </tr>
+                    <tr class="coupon">
+                        <td>
+                            <form>
+                                <div> <label>Have coupon?</label>
+                                    <div> <input type="text"   placeholder="Coupon code"> <button class="btn">Apply</button></div>
+                                </div>
+                            </form>
+                        </td>
+                        <td colspan="5"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </aside>
+        <div class="form-btn">
+            <button class="btn">Continue shopping</button>
+            <button class="btn">Checkout</button>
+        </div>
+    </div>
+
+    <div class="small-container">
+        <div class="row row-2">
+            <h3>People who bought this also bougth</h3>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <img src="img/product-1.jpg">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="ratting">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$50.00</p>
+            </div>
+        </div> 
+    </div>
+
+    
+       
+    
+
+    
+          
+    <!-------------------------------footer------------------------------------->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Location</h3>
+                    <p>Download App for Android and ios mobile phone.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="img/logo.jpeg" >
+                    <p>Dolor quis fugiat ut eiusmod est dolor irure pariatur duis incididunt minim.</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog post</li>
+                        <li>Return Policy</li>
+                        <li>Join Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Instagram</li>
+                        <li>WhatsApp</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">Copyright 2020 - Ets. Prince</p>
+        </div>
+    </div>
+
+
+    <!-----------------------------js------------------------------->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight="0px";
+
+        function menutoggle(){
+            if(MenuItems.style.maxHeight == "0px")
+                {
+                    MenuItems.style.maxHeight == "200px";
+                }
+            else
+                {
+                    MenuItems.style.maxHeight == "0px";
+                }
+        }
+    </script>
+   
+    </body>
+    
+</html>

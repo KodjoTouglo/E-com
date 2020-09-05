@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <link rel="stylesheet" href="{% static "css/base.css" %}">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,500;0,700;1,500&display=swap" 
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>{% block title %}Ets. Prince{% endblock %}</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="/"><img src="{% static "img/logo.jpeg" %}" width="125px"></a>
+                </div>
+                    
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="{% url "shop:product_list" %}">Products</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Account</a></li>
+                    </ul>
+                </nav>
+                    <a href="{% url "cart:cart_detail" %}"><img src="{% static "img/cart.png" %}" width="30px" height="30px"></a>
+                    <img src="{% static "img/menu.png" %}" class="menu-icon" onclick="menutoggle()">
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="contain">
+            <div class="slides">
+                {% for img in image.all %}
+                <div class="slide">
+                    <img src="{{img.image.url}}">
+                </div>
+                {% endfor %}
+            </div>
+            <div class="slide-controls">
+                <button id="prev-btn">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <button id="next-btn">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="categories">
+            <div class="small-container">
+                <h2 class="title">Category Product</h2>
+                <div class="row">
+                    {% for img in imgcatgry.all %}
+                    <div class="col-3">
+                       <img src ="{{ img.image.url }}">
+                    </div>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+
+        <div class="small-container">
+                <h2 class="title">Featured Product</h2>
+                    <div class="row">
+                        {% for r in featured_product %}
+                        <div class="col-4">
+                            <a href="{{ r.get_absolute_url }}">
+                                <img src="{% if r.image %}{{r.image.url}}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                            </a>
+                            <h4><a href="{{ r.get_absolute_url }}">{{r.name}}</a></h4>
+                            <p>${{r.price}}</p>
+                        </div>
+                        {% endfor %}
+                    </div> 
+                </div>
+
+                <h2 class="title">Latest Product</h2>
+                <div class="row">
+                    {% for s in latest_product %}
+                    <div class="col-4">
+                        <a href="{{ r.get_absolute_url }}">
+                            <img src="{% if s.image %}{{s.image.url}}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                        </a>
+                        <h4><a href="{{s.get_absolute_url}}">{{s.name}}</a></h4>
+                        <p>${{s.price}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+    
+    <!---footer-->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Location</h3>
+                        <p>Download App for Android and ios mobile phone.</p>
+                    </div>
+                    <div class="footer-col-2">
+                        <img src="{% static "img/logo.jpeg" %}" >
+                        <p>Dolor quis fugiat ut eiusmod est dolor irure pariatur duis incididunt minim.</p>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful Links</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog post</li>
+                            <li>Return Policy</li>
+                            <li>Join Affiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow us</h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Instagram</li>
+                            <li>WhatsApp</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="copyright">Copyright {% now 'Y' %} - Ets. Prince</p>
+            </div>
+        </div>
+
+
+    <!---js-->
+        <script src="{% static "js/collapse.js" %}"></script>
+
+        <script src="{% static "js/slide.js" %}"></script>
+
+        <script src="{% static "js/loginslide.js" %}"></script>
+    </body>    
+</html>

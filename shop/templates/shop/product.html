@@ -1,0 +1,62 @@
+
+{% block content %}
+<div class="contain">
+    <div class="slides">
+        {% for img in image.all %}
+        <div class="slide">
+            <img src="{{img.image.url}}">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="slide-controls">
+        <button id="prev-btn">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <button id="next-btn">
+            <i class="fa fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+ <div class="categories">
+            <div class="small-container">
+                <h2 class="title">Category Product</h2>
+                <div class="row">
+                    {% for img in imgcatgry.all %}
+                    <div class="col-3">
+                       <img src ="{{ img.image.url }}">
+                    </div>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+
+<div class="small-container">
+        <h2 class="title">Featured Product</h2>
+            <div class="row">
+                 {% for r in featured_product %}
+                <div class="col-4">
+                    <a href="{{ r.get_absolute_url }}">
+                        <img src="{% if r.image %}{{r.image.url}}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    </a>
+                    <h4><a href="{{ r.get_absolute_url }}">{{r.name}}</a></h4>
+                    <p>${{r.price}}</p>
+                </div>
+                 {% endfor %}
+            </div> 
+        </div>
+
+        <h2 class="title">Latest Product</h2>
+        <div class="row">
+            {% for s in latest_product %}
+            <div class="col-4">
+                <a href="{{ r.get_absolute_url }}">
+                    <img src="{% if s.image %}{{s.image.url}}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <h4><a href="{{s.get_absolute_url}}">{{s.name}}</a></h4>
+                <p>${{s.price}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

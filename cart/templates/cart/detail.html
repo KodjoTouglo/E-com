@@ -1,0 +1,120 @@
+ {% extends "shop/product/index.html" %}
+{% load static %}
+
+{% block title %}
+  Your shopping cart
+{% endblock %}
+ 
+ {% block content %}
+ <div class="small-container cart-page">
+        <aside>
+            <table class="cart">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Remove</th>
+                    <th>Unit price</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 {% for item in cart %}
+                 {% with product=item.product %}
+                    <tr>
+                        <td>
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.image %}{{ product.image.url }}
+                                {% else %}{% static "img/no_image.png" %}{% endif %}">
+                            </a>
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>
+                            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.override }}
+                                <input type="submit" value="Update">
+                                {% csrf_token %}
+                            </form>
+                        </td>
+                        <td>
+                           <form action="{% url "cart:cart_remove" product.id %}" method="post">
+                                <input type="submit" value="Remove">
+                                {% csrf_token %}
+                           </form>
+                        </td>
+                        <td class="num">${{ item.price }}</td>
+                        <td class="num">${{ item.total_price }}</td>
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+
+                    {% if cart.coupon %}
+                    <tr class="subtotal">
+                        <td>Subtotal</td>
+                        <td colspan="4"></td>
+                        <td class="num">{{ cart.get_total_price|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td>"{{ cart.coupon.code }}" coupon ({{ cart.coupon.discount }}% off)</td>
+                        <td colspan="4"></td>
+                        <td class="num neg">- ${{ cart.get_discount|floatformat:2 }}</td>
+                    </tr>
+                    {% endif %}
+
+                    <tr class="total">
+                        <td>Total</td>
+                        <td colspan="4"></td>
+                        <td class="num"> ${{ cart.get_total_price_after_discount|floatformat:2 }}</td>
+                    </tr>
+                    <!--tr class="coupon">
+                        <td>
+                            <form action="{% url "coupons:apply" %}" method="post">
+                                 <div> <label>Have coupon?</label>
+                                    <div> {{ coupon_apply_form }} <input type="submit" class="btn"></div>
+                                </div>
+                                {% csrf_token %}
+                            </form>
+                        </td>
+                        <td colspan="5"></td>
+                    </tr-->
+                </tbody>
+            </table>
+        </aside>
+
+        <div class="form-btn">
+            <form action="{% url "coupons:apply" %}" method="post">
+                <div> <label>Have coupon?</label>
+                    <div> {{ coupon_apply_form }} <input type="submit" class="btn"></div>
+                </div>
+                {% csrf_token %}
+            </form>
+        </div><br>
+
+        <div class="form-btn">
+            <a href="{% url "shop:product_list" %}"><button class="btn">Continue shopping</button></a>
+            <a href="{% url "orders:order_create" %}"><button class="btn">Checkout</button></a>
+        </div>
+    </div>
+
+    <div class="small-container">
+        <div class="row row-2">
+            <h3>People who bought this also bougth</h3>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <img src="{% static "img/product-1.jpg" %}">
+                <h4>Red Printed T-Shirt</h4>
+                <div class="ratting">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$50.00</p>
+            </div>
+        </div> 
+    </div>
+{% endblock %}
