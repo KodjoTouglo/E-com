@@ -1,0 +1,29 @@
+    {% extends 'shop/product/index.html' %}
+    {% load static %}
+
+    {% block title %}Login{% endblock %}
+
+    {% block content %}
+    <div class="account-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-container">
+                        <div class="form-btn">
+                            <span>Login</span>
+                            <hr id="Indicator">
+                        </div>
+                        <form id="LoginForm" method='post'>
+                            {{form.as_p}}
+                            {% csrf_token %}
+                            <a href="">Forgot password ?</a>
+                            <button type="submit" class="btn">Login</button>
+                            <p>Don't have an account ? <a href="{% url "accounts:register" %}">Sign-in</a></p>   
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    

@@ -1,0 +1,14 @@
+{% extends 'shop/product/index.html' %}
+
+{% block Logout %}Logout{% endblock  %}
+
+{% block content %}
+<div class="small-container response">
+    <div class="row">
+        <div class="col-2">
+            <h1>Logged out</h1>
+            <p>You have been successfully logged out. You can <a href="{% url 'accounts:login' %}"><strong class="class">log-in again</strong></a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

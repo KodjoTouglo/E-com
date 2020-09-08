@@ -1,0 +1,41 @@
+{% extends 'shop/product/index.html' %}
+
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="form-container register">
+                    <div class="form-btn">
+                        <span>Register</span>
+                        <hr id="Indicator">
+                    </div>
+                    <form id="RegForm" method="post">
+                                {{form.non_field_errors}}
+                                {{ form.first_name.errors }}
+                                {{ form.first_name }}
+                                {{ form.last_name.errors }}
+                                {{ form.last_name }}
+                                {{ form.username.errors }}
+                                {{ form.username }}
+                                {{ form.email.errors }}
+                                {{ form.email }}
+                                {{ form.password.errors }}
+                                {{ form.password }}
+                                {{ form.password2.errors }}
+                                {{ form.password2 }}
+                        {% if msg %}<strong>{{ msg }}</strong>{% endif %}
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+    

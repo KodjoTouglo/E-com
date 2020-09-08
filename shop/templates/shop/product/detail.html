@@ -24,65 +24,91 @@
                 </div>
             </div>
             <div class="col-2">
-                <p><a href="/">Home</a> / <a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></p>
+                <p><a href="/">Home</a> / <a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></p>  
                 <h1>{{ product.name }}</h1>
-                <h4>${{ product.price }}</h4>
 
-                <form action="{% url "cart:cart_add" product.id %}" method="post" id="post-form">
-                    {% csrf_token %}
+                {% if product.variant == 'Size-Color' %}
+                <form  method="post" id="post-form">
                     <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
-
-                    {% if product.variant == 'None' %}
-                     {{ cart_product_form }}
-                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
-
-                    {% elif product.variant == 'Size-Color' %}
-                    <select name='size' id="size">
-                        <option>Size:</option>
-                        {% for itm in sizes %}
-                        <option value="{{itm.size_id}}">{{itm.sizes.name}}</option>
+                    <span class="text-uppercase">Size :</span>
+                     {% csrf_token %}
+                    <select name="size" id="size">
+                        {% for rs in sizes %}
+                        <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
                         {% endfor %}
                     </select>
-                    <ul>
-                        {% for itm in color %}
-                        <input type="radio" name="color" value="{{ itm.id }}">
-                        <li >
-                            <a href="#" style="background-color:{{ itm.color.code }}; color: #ffffff; text-shadow: 2px 2px #000000; width: 70px">
-                            {{ itm.color }} ${{ itm.price }}
-                            </a>
-                            <img src="{{ itm.image }}" style="height: 70px">
-                        </li>
-                        {% endfor %}
-                    </ul>
-                     {{ cart_product_form }}
-                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
-
-                    {% elif product.variant == 'Size' %}
-                    <select name='size' id="size">
-                        <option>Size:</option>
-                        {% for itm in size %}
-                        <option value="{{itm.size_id}}">{{itm.size.name}}</option>
-                        {% endfor %}
-                    </select>
-                     {{ cart_product_form }}
-                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
-
-                    {% elif product.variant == 'Color' %}
-                     <ul>
-                        {% for itm in color %}
-                        <input type="radio" name="color" value="{{ itm.id }}">
-                        <li >
-                            <a href="#" style="background-color:{{ itm.color.code }}; color: #ffffff; text-shadow: 2px 2px #000000; width: 70px">
-                            {{ itm.color }} ${{ itm.price }}
-                            </a>
-                            <img src="{{ itm.image }}" style="height: 70px">
-                        </li>
-                        {% endfor %}
-                    </ul>
-                     {{ cart_product_form }}
-                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
-                    {% endif %}
                 </form>
+
+                <form  method="post" action="?q=selectvariant" id="post-color">
+                    {% csrf_token %}
+                    <div id="appendHere">
+                        <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                        <ul>
+                            <li>Color:</li>
+                            {% for itm in colors %}
+                            <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                            <li>
+                                <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px">{{itm.color}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </form>
+
+                {% elif product.variant == 'Size' %}
+                <form method="post" action="?q=selectvariant" id="post-color">
+                    {% csrf_token %}
+                    <div id="appendHere">
+                        <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                        <ul>
+                            <li>Size:</li>
+                            {% for itm in sizes %}
+                            <input  type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                            <li>
+                                <a style=" color: #204d74;  width: 90px">{{itm.size}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </form>
+
+                {% elif product.variant == 'Color' %}
+                <form method="post" action="?q=selectvariant" id="post-color">
+                    {% csrf_token %}
+                    <div id="appendHere">
+                        <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                        <ul>
+                            <li>Color:</li>
+                            <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                            {% for itm in colors %}
+                            <li>
+                                <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px"> {{ rs.color }} </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </form>
+                {% endif %}
+
+                {% if product.variant != "None" %}
+                <form action="{% url "cart:cart_add" product.id %}" method="post" id="addchart-form">
+                    {% csrf_token %}
+                    <h4>${{ variant.price }}</h4>
+                    <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
+                     {{ cart_product_form }}
+                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
+                </form>
+
+                {% else %}
+
+                <form action="{% url "cart:cart_add" product.id %}" method="post" id="addchart-form">
+                    {% csrf_token %}
+                    <h4>${{ product.price }}</h4>
+                     {{ cart_product_form }}
+                    <button type="submit" value="Add to cart" class="btn">Add to cart</button>
+                </form>
+                {% endif %}
+            
                 <h3>Product Details</h3><br>
                 <p>{{ product.description|linebreaks }}</p>
             </div>
@@ -128,4 +154,28 @@
                 ProductImg.src = SmallImg[3].src;
             }
     </script>
+
+    <script>
+        $(document).on('change', '#post-form',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'{% url "ajaxcolor" %}',
+            data:{
+                productid:$('#productid').val(),
+                size:$('#size').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            data_type : 'html',
+            success: function (data) {
+                console.log("success");
+                $('#appendHere').html(data.rendered_table);
+            },
+            error: function (data) {
+                alert("Got an error dude " + data);
+            }
+        });
+    });
+</script>
 {% endblock %}
