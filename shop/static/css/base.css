@@ -513,14 +513,15 @@ td input[type="submit"] {
 
 /*--------------------------------Account-----------------------------*/
 .account-page {
-    background: radial-gradient(#fff,yellow);
     padding-bottom: 50px 0;
+    margin-top: 100px;
+    margin-bottom: 90px;
 }
 
 .form-container {
     background: #fff;
     width: 300px;
-    height: 400px;
+    height: 500px;
     position: relative;
     text-align: center;
     padding: 20px 0;
@@ -530,11 +531,13 @@ td input[type="submit"] {
     margin-bottom: 20px;
 }
 
+
+
+
 .form-container span {
     font-weight: bold;
     padding: 0 10px;
     color: #555;
-    cursor: pointer;
     width: 100px;
     display: inline-block;
 }
@@ -572,15 +575,10 @@ form .btn {
 
 .form .btn:focus {
     outline: none;
-
 }
 
-#LoginForm  {
-    left: -300px;
-}
-
-#RegForm {
-    left: 0;
+.logout {
+    color: #ff523b;
 }
 
 form a {
@@ -593,8 +591,6 @@ form a {
     background: #ff523b;
     height: 3px;
     margin-top: 8px;
-    transform: translateX(100px);
-    transition: transform 1s;
 }
 
 /*--------------------------Checkout-----------------------*/

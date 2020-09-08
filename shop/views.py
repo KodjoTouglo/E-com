@@ -81,6 +81,6 @@ def ajaxcolor(request):
             'productid': productid,
             'colors': colors,
         }
-        data = {'rendered_table': render_to_string('detail.html', context=context)}
+        data = {'rendered_table': render_to_string('shop/product/variant.html', context=context)}
         return JsonResponse(data)
     return JsonResponse(data)
