@@ -160,7 +160,7 @@
         e.preventDefault();
         $.ajax({
             type:'POST',
-            url:'{% url "ajaxcolor" %}',
+            url:'{% url "shop:ajaxcolor" %}',
             data:{
                 productid:$('#productid').val(),
                 size:$('#size').val(),

@@ -1,6 +1,6 @@
 <input type="hidden" name="size" id="size" value="{{ size_id }}">
-<ul class="color-option" >
-    <li><span class="text-uppercase">Color:</span></li>
+<ul>
+    <li>Color:</span></li>
     {% for item in colors %}
         <input type="radio" name="variantid" id="variantid" value="{{ item.id }}" onchange="this.form.submit();">
         <li >

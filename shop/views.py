@@ -48,7 +48,7 @@ def product_detail(request, id, slug):
     if product.variant != "None":
         if request.method == 'POST':
             variant_id = request.POST.get('variantid')
-            variant = Variants.object.get(id=variant_id)
+            variant = Variants.objects.get(id=variant_id)
             sizes = Variants.objects.raw('SELECT * FROM shop_variants WHERE product_id=%s GROUP BY size_id',[id])
             colors = Variants.objects.filter(product_id=id,size_id=variant.size_id)
             query += variant.name+ ' Size:' +str(variant.size) +' Color:' +str(variant.color)
@@ -70,6 +70,7 @@ def product_detail(request, id, slug):
     return render(request, 'shop/product/detail.html', context)
 
 
+ 
 def ajaxcolor(request):
     data = {}
     if request.POST.get('action') == 'post':
